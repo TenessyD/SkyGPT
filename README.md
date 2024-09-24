@@ -1,2 +1,2 @@
 # SkyGPT
-This project aims to use ChatGPT to automatically configure and run simulations on Skydel
+This project aims to use ChatGPT from Open AI API to automatically configure and run simulations on Skydel
