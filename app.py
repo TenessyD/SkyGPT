@@ -1,21 +1,33 @@
-import openai
 import os
+from flask import Flask, render_template
+import openai
+from dotenv import load_dotenv
+import skydelsdx
 
-openai.api_key = os.environ.get("OPENAI_API_KEY")
+load_dotenv() #loading .env file which contain the API key
+openai.api_key = os.getenv("OPENAI_API_KEY")
+app = Flask("Sky-GPT")  # Application name
 
-prompt = "Hello! How are you?"
+@app.route("/")
 
-def get_response(prompt):
-    try:
-        completion = openai.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": prompt}
-            ]
-        )
-        return completion.choices[0].message['content']
-    except Exception as e:
-        return f"Une erreur s'est produite: {str(e)}"
+def home():
+    return render_template('index.html')
 
-print(get_response(prompt))
+def buildConversationStructure(messages: list) -> list[dict]: # Creating a dictionnaire from the list of message as requested from Open AI API
+    return [
+        {"role": "user" if i%2 == 0 else "assistant", "content": message} # Checking thanks to the modulo operation whether the message comes from the user or chat GPT
+         for i, message in enumerate(messages)
+    ]
+
+def even_stream(conversation:list[dict]) -> str:
+    response = openai.chat.completion.create(
+        model = "gpt-3.5-turbo",
+        messages=conversation,
+        stream=True
+    )
+
+if __name__=='__main__':
+    #app.run(debug=True, host='127.0.0.1', port=5000) # Realized Flask server location
+    print(buildConversationStructure(messages=["Bonjour, comment ca va ?","Ca va bien et toi ?", "Super merci!"]))
+
+# 1:07:49

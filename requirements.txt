@@ -1,2 +1,4 @@
 openai~=1.47.1
 setuptools~=75.1.0
+Flask
+python-dotenv
