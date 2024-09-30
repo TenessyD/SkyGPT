@@ -5,15 +5,15 @@ to easily create various testing scenarios to evaluate the performance of a GNSS
 
 ## Technical details
 Sky-GPT integrates ChatGPT through its Python API to automate the simulation configuration and execution on Skydel across its remote API.  
-To run the app on your machine, you'll need to install `Flask`, the framework used to manage the python backend and `Tailwind CSS` for the 
+To run the app on your machine, you'll need to install `Flask`, the framework used to manage the python backend and `Tailwind CSS` framework for the 
 frontend. 
-Mention: This project can also be deployed on a web server, allowing anyone to access it without needing any specific setup on its local environment.
+Mention: This application can also be deployed on a web server, allowing anyone to use it without any specific setup installed on its system.
 
 ## Environment Setup
 
-Install 'Tailwind CSS' by following the link: [Tailwind CSS v3.4.13 Release](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.4.13) 
-and download the appropriate executable depending on your OS. Then, rename the file and add its path as an environment variable to access it 
-from anywhere across your machine.
+Install 'Tailwind CSS' by downloading the appropriate executable file for your OS available on: 
+[Tailwind CSS v3.4.13 Release](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.4.13). Then, rename the file and add it to the system PATH to access it 
+from anywhere across your computer.
 
 Next, install the required dependencies:
 
