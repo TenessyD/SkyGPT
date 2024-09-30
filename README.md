@@ -1,35 +1,34 @@
-# Sky-GPT
-
 ## Project Objectives
-The objective is to develop an application to interface OpenAI's ChatGPT with Skydel to create and run simulation
-automatically, based on the user’s requirements specified on the prompt. This application would help any skydel user 
-to easily create various testing scenarios to assess the performance of a GNSS receiver under different conditions.
+This project aims to develop an application that interfaces OpenAI's ChatGPT with Skydel to generate and run simulations
+automatically, based on the user’s prompt-defined requirements. This application will help any Skydel user 
+to easily create various testing scenarios to evaluate the performance of a GNSS receiver under different conditions.
 
 ## Technical details
-Sky-GPT integrates OpenAI's ChatGPT through its Python API to automate the simulation configuration and running on the Skydel software. 
-This project can be deployed on any web server, allowing user to use without needing any specific local setup. If you want to run it locally, 
-you'll need to install `Flask` framework for the python backend. The frontend is managed using the `Tailwind CSS` framework and JavaScript.
+Sky-GPT integrates ChatGPT through its Python API to automate the simulation configuration and execution on Skydel across its remote API.  
+To run the app on your machine, you'll need to install `Flask`, the framework used to manage the python backend and `Tailwind CSS` for the 
+frontend. 
+Mention: This project can also be deployed on a web server, allowing anyone to access it without needing any specific setup on its local environment.
 
 ## Environment Setup
 
 Install 'Tailwind CSS' by following the link: [Tailwind CSS v3.4.13 Release](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.4.13) 
-and download the appropriate executable depending on your OS. After downloading, rename the file and add its path as an 
-environment variable to access it from anywhere across your machine.
+and download the appropriate executable depending on your OS. Then, rename the file and add its path as an environment variable to access it 
+from anywhere across your machine.
 
 Next, install the required dependencies:
 
-``$ pip install Flask``
-``$ pip install openai``
-``$ pip install python-dotenv``
+-  ``$ pip install Flask``
+-  ``$ pip install openai``
+-  ``$ pip install python-dotenv``
 
 To enable an interaction between ChatGPT and Skydel, download the Skydel Remote API by following the instructions 
-provided in the GitHub : [Skydel Remote API repository](https://github.com/learn-safran-navigation-timing/skydel-remote-api). 
-Ensure that the Skydel RAPI is properly installed and configured, allowing ChatGPT to execute commands and manage simulations in Skydel.
+provided on the public GitHub repo : [Skydel Remote API repository](https://github.com/learn-safran-navigation-timing/skydel-remote-api). 
+Make sure that the Skydel RAPI is properly installed by running the `basic_exemple.py` script available on the same repo.
 
 ## Usage
 
 1. Generate an API key from the [OpenAI website](https://platform.openai.com/signup), and assign it to the `openai.api_key` variable.
-2. Run `app.py` using any code editor or terminal.
+2. Run `app.py` using any code editor or terminal (make sure that Python is installed and added to your system PATH).
 3. Open your web browser and navigate to `http://127.0.0.1` to access the local hoisted application.
 
 Once the application is running, you should be able to send/receive messages from ChatGPT via the GUI.

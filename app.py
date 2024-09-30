@@ -2,30 +2,23 @@ import os
 from flask import Flask, render_template, request, Response
 import openai
 from dotenv import load_dotenv
-import skydelsdx
-from skydelsdx.commands import *
-import datetime
+from skydel_manager import SkydelManager
 
-
-load_dotenv() # loading .env file which contain the API key
+load_dotenv() # Loading .env file which contain the API key
 openai.api_key = os.getenv("OPENAI_API_KEY")
 app = Flask("Sky-GPT")  # Application name
 
-sim = None
-check_skydel_connection = False  # Global variable to track Skydel connection
+skydel_manager = SkydelManager() # Initializing Skydel manager
 
 @app.route("/") # Road toward a specific URL, here '/' represents the project home page
 def home():     # Called function when the user access to the specified path
     return render_template('index.html') # Call HTML file to display
 
-
 @app.route("/prompt", methods=["POST"])
 def prompt():
-
     messages = request.json['messages']  # Recovering all the data in the 'messages' key created in the js file
     print(messages[-1])
-    sendCommandToSkydel(messages[-1])
-
+    skydel_manager.sendCommand(messages[-1])
     return messages
 
 # @app.route("/prompt", methods=["POST"])
@@ -34,38 +27,6 @@ def prompt():
 #     messages = request.json['messages'] # Recovering all the data in the 'messages' key created in the js file
 #     conversation = FormatedConversationToSend(messages=messages) # send the messages to the function to format them for chat GPT API (list of dictionaries)
 #     return Response(event_stream(conversation), mimetype = 'text/event-stream')
-
-def createNewConfiguration():
-    # Connect
-    sim = skydelsdx.RemoteSimulator()
-    sim.setVerbose(True)
-    sim.connect()  # same as sim.connect("localhost")
-    # Create new config
-    sim.call(New(True))
-    return sim
-
-def sendCommandToSkydel(command):
-
-    global sim  #Access the global sim object
-    global check_skydel_connection
-
-    if check_skydel_connection == False:  # Check if Skydel is connected
-        sim = createNewConfiguration()  # Function call to set up a connection with a Skydel instance and initialization of a new config
-        print("Skydel connection established")  # Response after connection
-        check_skydel_connection = True  # Set the flag to 'True' after connecting
-
-    if command == "sim.start()":
-        sim.call(SetModulationTarget("NoneRT", "", "", True, "uniqueId"))
-        sim.call(ChangeModulationTargetSignals(0, 12500000, 100000000, "UpperL", "L1CA", -1, False, "uniqueId")) # Minimum required configuration to start a simulation
-        #sim.call(SetVehicleTrajectoryCircular("Circular", 0.7853995339022749, -1.2740964277717111, 0, 50, 3, True))
-        #sim.call(SetGpsStartTime(datetime.datetime(2021, 2, 15, 7, 0, 0)))
-        #sim.call(SetVehicleAntennaGain([], AntennaPatternType.AntennaNone, GNSSBand.L1))
-        sim.arm()
-        sim.start()
-    elif command == "sim.stop()":
-        sim.stop()
-
-    # sim.call(SetModulationTarget(command))
 
 def event_stream(conversation:list[dict]) -> str:
     response = openai.ChatCompletion.create(
